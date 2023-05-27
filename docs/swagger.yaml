@@ -1,0 +1,73 @@
+basePath: /
+host: localhost:3001
+info:
+  contact:
+    email: youremail@provider.com
+    name: API Support
+  description: This is a sample swagger for Fiber
+  title: Fiber Example API
+  version: "1.0"
+paths:
+  /rate:
+    get:
+      consumes:
+      - application/json
+      description: Запит має повертати поточний курс BTC до UAH використовуючи будь-який
+        third party сервіс з публічним АРІ
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+      summary: Отримати поточний курс BTC до UAH
+      tags:
+      - rate
+  /sendEmails:
+    post:
+      consumes:
+      - application/json
+      description: Запит має отримувати актуальний курс BTC до UAH за допомогою third-party
+        сервісу та відправляти його на всі електронні адреси, які були підписані раніше.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+      summary: Відправити e-mail з поточним курсом на всі підписані електронні пошти.
+      tags:
+      - subscription
+  /subscribe:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Запит має перевірити, чи немає данної електронної адреси в поточній
+        базі даних (файловій) і, в разі її відсутності, записувати її. Пізніше, за
+        допомогою іншого запиту ми будемо відправляти лист на ті електронні адреси,
+        які будуть в цій базі.
+      parameters:
+      - description: Електронна адреса, яку потрібно підписати
+        in: formData
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "409":
+          description: Conflict
+      summary: Підписати емейл на отримання поточного курсу
+      tags:
+      - subscription
+swagger: "2.0"

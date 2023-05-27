@@ -1,0 +1,103 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample swagger for Fiber",
+        "title": "Fiber Example API",
+        "contact": {
+            "name": "API Support",
+            "email": "youremail@provider.com"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:3001",
+    "basePath": "/",
+    "paths": {
+        "/rate": {
+            "get": {
+                "description": "Запит має повертати поточний курс BTC до UAH використовуючи будь-який third party сервіс з публічним АРІ",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "rate"
+                ],
+                "summary": "Отримати поточний курс BTC до UAH",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/sendEmails": {
+            "post": {
+                "description": "Запит має отримувати актуальний курс BTC до UAH за допомогою third-party сервісу та відправляти його на всі електронні адреси, які були підписані раніше.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscription"
+                ],
+                "summary": "Відправити e-mail з поточним курсом на всі підписані електронні пошти.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/subscribe": {
+            "post": {
+                "description": "Запит має перевірити, чи немає данної електронної адреси в поточній базі даних (файловій) і, в разі її відсутності, записувати її. Пізніше, за допомогою іншого запиту ми будемо відправляти лист на ті електронні адреси, які будуть в цій базі.",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscription"
+                ],
+                "summary": "Підписати емейл на отримання поточного курсу",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Електронна адреса, яку потрібно підписати",
+                        "name": "email",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    }
+                }
+            }
+        }
+    }
+}
